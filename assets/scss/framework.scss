@@ -1,0 +1,17 @@
+// Base Configurations
+html {
+	@apply relative box-border font-sans font-medium text-black antialiased selection:bg-primary/25 h-[100dvh] w-[100dvw] overflow-x-hidden overflow-y-auto;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+}
+body, #__nuxt {
+	@apply h-full w-full;
+}
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+}

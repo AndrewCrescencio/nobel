@@ -1,0 +1,10 @@
+input {
+	@apply h-8 w-full
+		rounded-l-md rounded-r-md border border-gray-300 bg-white px-4
+		text-sm text-gray-700
+		placeholder:font-normal placeholder:text-gray-400
+		hover:border-primary hover:outline-none hover:ring-0 hover:ring-offset-0 hover:ring-offset-transparent
+		active:border-primary active:outline-none active:ring-0 active:ring-offset-0 active:ring-offset-transparent
+		focus:border-primary focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-offset-transparent
+		transition duration-200;
+}

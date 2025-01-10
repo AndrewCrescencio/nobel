@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	html,
+	body {
+		@apply relative box-border overflow-x-hidden font-sans font-normal antialiased;
+		-ms-text-size-adjust: 100%;
+		-webkit-text-size-adjust: 100%;
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing: antialiased;
+	}
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+		margin: 0;
+	}
+
+	@import 'framework';
+}
+
+@layer components {
+	@import 'forms';
+	@import 'buttons';
+}
