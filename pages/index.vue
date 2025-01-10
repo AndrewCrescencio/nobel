@@ -37,7 +37,7 @@ async function getData() {
 
 		const data = await response.json()
 		nobelPrizes.value = data.nobelPrizes
-	} catch (error) {
+	} catch (error: any) {
 		console.error(error.message);
 	}
 }
