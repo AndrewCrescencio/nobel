@@ -26,7 +26,11 @@
 
 <script setup lang="ts">
 
-const nobelPrizes = ref([])
+interface NobelPrize {
+	dateAwarded: string;
+}
+
+const nobelPrizes = ref<NobelPrize[]>([])
 async function getData() {
 	const url = "https://api.nobelprize.org/2.1/nobelPrizes?limit=20&sort=desc&nobelPrizeYear=2024&yearTo=2020&format=json&csvLang=en"
 	try {
@@ -45,6 +49,19 @@ async function getData() {
 function sortByDateAwarded() {
 	// Task 1.1: Implement sorting by date the prize was awarded, most recently awarded prize first
 	// Please use only this function to achieve this effect
+
+	// Andrew's NOTE: idk why but seems like the prize.awardYear is not the same as the dateAwarded
+	// so i'm using the dateAwarded to sort the prizes
+
+	nobelPrizes.value.sort((a, b) => {
+		if (!a.dateAwarded) return 1;
+		if (!b.dateAwarded) return -1;
+
+		const dateA = new Date(a.dateAwarded);
+		const dateB = new Date(b.dateAwarded);
+
+		return dateB.getTime() - dateA.getTime();
+	});
 }
 
 function searchByCategoryName() {
