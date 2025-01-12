@@ -11,12 +11,25 @@
 				Refresh Data
 			</div>
 			<div class="ml-auto">
-				<input type="text" @change="searchByCategoryName" placeholder="Search by Category" />
+				query : {{ searchQuery }}
+				<!-- <input 
+					type="text" 
+					v-model="searchQuery"
+					placeholder="Search by Category" 
+					class="search-input"
+				/> -->
+				<input 
+					type="text" 
+					:value="searchQuery"
+					@input="searchByCategoryName"
+					placeholder="Search by Category" 
+					class="search-input"
+				/>
 			</div>
 		</div>
 		<div class="w-full h-auto mb-12">
 			<div class="nobel-prizes-container">
-				<template v-for="prize in nobelPrizes">
+				<template v-for="prize in filteredNobelPrizes">
 					<NobelPrize :prize="prize" />
 				</template>
 			</div>
@@ -25,12 +38,32 @@
 </template>
 
 <script setup lang="ts">
+import { useDebounceFn } from '@vueuse/core'
 
-interface NobelPrize {
+type NobelPrizeCategoryFullName = {
+	en: string;
+	no: string;
+	se: string;
+}
+
+type NobelPrize  = {
 	dateAwarded: string;
+	categoryFullName: NobelPrizeCategoryFullName;
 }
 
 const nobelPrizes = ref<NobelPrize[]>([])
+
+const searchQuery = ref<string>("")
+
+const filteredNobelPrizes = computed(() => {
+	const query = searchQuery.value.trim().toLowerCase()
+	if (!query) return nobelPrizes.value
+	
+	return nobelPrizes.value.filter(prize => 
+		prize.categoryFullName?.en?.toLowerCase().includes(query)
+	)
+})
+
 async function getData() {
 	const url = "https://api.nobelprize.org/2.1/nobelPrizes?limit=20&sort=desc&nobelPrizeYear=2024&yearTo=2020&format=json&csvLang=en"
 	try {
@@ -64,10 +97,12 @@ function sortByDateAwarded() {
 	});
 }
 
-function searchByCategoryName() {
+const searchByCategoryName = useDebounceFn((event: Event) => {
 	// Task 1.2: Allow using the input field to search for prizes by category name
 	// You can make changes to this function or anywhere else you see appropriate within this file
-}
+    const input = event.target as HTMLInputElement
+    searchQuery.value = input.value
+}, 300)
 
 function removePrize(){
 	// Task 3.2: Write here the necessary code to remove a prize from the list
