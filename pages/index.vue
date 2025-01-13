@@ -11,13 +11,6 @@
 				Refresh Data
 			</div>
 			<div class="ml-auto">
-				query : {{ searchQuery }}
-				<!-- <input 
-					type="text" 
-					v-model="searchQuery"
-					placeholder="Search by Category" 
-					class="search-input"
-				/> -->
 				<input 
 					type="text" 
 					:value="searchQuery"
@@ -46,9 +39,26 @@ type NobelPrizeCategoryFullName = {
 	se: string;
 }
 
+interface Laureate {
+	fullName: {
+		en: string;
+	};
+	knownName: {
+		en: string;
+	};
+	orgName: {
+		en: string;
+	};
+}
+
 type NobelPrize  = {
+	awardYear: string;
 	dateAwarded: string;
+	category: {
+		en: string;
+	};
 	categoryFullName: NobelPrizeCategoryFullName;
+	laureates?: Laureate[];
 }
 
 const nobelPrizes = ref<NobelPrize[]>([])
