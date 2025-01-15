@@ -124,6 +124,7 @@ function removePrize(prizeToRemove: NobelPrize) {
 	nobelPrizes.value = nobelPrizes.value.filter(prize => 
 		prize.dateAwarded !== prizeToRemove.dateAwarded
 	);
+	addNotification("Prize removed", `The prize for ${prizeToRemove.categoryFullName.en} has been removed`, 5000)
 }
 
 function refreshData() {
