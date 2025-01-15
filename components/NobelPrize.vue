@@ -1,6 +1,9 @@
 <template>
 	<div class="nobel-prize-card text-sm relative text-black">
-		<button class="text-red-500 absolute top-3 right-3 rounded-full border border-red-500 w-6 h-6 p-0 text-xs line-height-0 grid place-items-center uppercase">
+		<button 
+			@click="removePrize"
+			class="text-red-500 absolute top-3 right-3 rounded-full border border-red-500 w-6 h-6 p-0 text-xs line-height-0 grid place-items-center uppercase"
+		>
 			<span class="text-red-500">x</span>
 		</button>
 		<p class="uppercase text-gray-500 text-xs">
@@ -58,8 +61,12 @@ const formattedLaureateNames = computed(() => {
 	}).join(', ');
 });
 
-function removePrize() {
+const emit = defineEmits<{
+	remove: [prize: NobelPrize]
+}>();
 
+function removePrize() {
+	emit('remove', props.prize);
 }
 </script>
 

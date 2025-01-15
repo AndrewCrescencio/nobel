@@ -23,7 +23,10 @@
 		<div class="w-full h-auto mb-12">
 			<div class="nobel-prizes-container">
 				<template v-for="prize in filteredNobelPrizes">
-					<NobelPrize :prize="prize" />
+					<NobelPrize 
+						:prize="prize" 
+						@remove="removePrize"
+					/>
 				</template>
 			</div>
 		</div>
@@ -114,8 +117,11 @@ const searchByCategoryName = useDebounceFn((event: Event) => {
     searchQuery.value = input.value
 }, 300)
 
-function removePrize(){
+function removePrize(prizeToRemove: NobelPrize) {
 	// Task 3.2: Write here the necessary code to remove a prize from the list
+	nobelPrizes.value = nobelPrizes.value.filter(prize => 
+		prize.dateAwarded !== prizeToRemove.dateAwarded
+	);
 }
 
 function refreshData() {
