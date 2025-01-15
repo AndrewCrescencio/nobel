@@ -64,6 +64,8 @@ type NobelPrize  = {
 	laureates?: Laureate[];
 }
 
+const { addNotification } = useNotificationsStore()
+
 const nobelPrizes = ref<NobelPrize[]>([])
 
 const searchQuery = ref<string>("")
@@ -128,6 +130,7 @@ function refreshData() {
 	getData()
 	// Task 3.3: Use the notifications store to add a notification that the data has been refreshed
 	// The store already exists and does not need any change, use its methods to trigger a notification with any message you like
+	addNotification("Data refreshed", "The data has been refreshed", 5000)
 }
 
 onMounted(() => {
