@@ -1,9 +1,17 @@
 <template>
-	<div class="nobel-prize-card text-sm">
-		<p class="uppercase"><strong class="font-bold">{{prize.awardYear}}</strong> Nobel Prize for</p>
-		<p class="font-medium category-name">{{prize.category.en}}</p>
+	<div class="nobel-prize-card text-sm relative text-black">
+		<button 
+			@click="removePrize"
+			class="text-red-500 absolute top-3 right-3 rounded-full border border-red-500 w-6 h-6 p-0 text-xs line-height-0 grid place-items-center uppercase"
+		>
+			<span class="text-red-500">x</span>
+		</button>
+		<p class="uppercase text-gray-500 text-xs">
+			<strong class="font-bold">{{prize.awardYear}}</strong> Nobel Prize for
+		</p>
+		<p class="font-medium category-name text-sm">{{prize.category.en}}</p>
 		<template v-if="formattedLaureateNames">
-			<p class="uppercase">Awarded to</p>
+			<p class="uppercase text-gray-500 text-xs">Awarded to</p>
 			<p class="font-medium laureate-names">{{ formattedLaureateNames }}</p>
 		</template>
 	</div>
@@ -53,8 +61,12 @@ const formattedLaureateNames = computed(() => {
 	}).join(', ');
 });
 
-function removePrize() {
+const emit = defineEmits<{
+	remove: [prize: NobelPrize]
+}>();
 
+function removePrize() {
+	emit('remove', props.prize);
 }
 </script>
 
@@ -64,7 +76,14 @@ function removePrize() {
 /* The colors and font size/weight do not need to be exactly the same, try your best to match it */
 /* If you are familiar with it, you can look into our tailwind configuration for hints */
 .nobel-prize-card-original{
-
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	border: 2px solid #e5e7eb;
+	border-radius: 0.375rem;
+	padding: 12px;
+	width: 100%;
+	height: 100%;
 }
 
 /* Task 2.2: Repeat the same exercise for the tailwind version of the card */
@@ -79,10 +98,9 @@ function removePrize() {
 	gap: 0.5rem;
 	border: 2px solid #e5e7eb;
 	border-radius: 0.375rem;
-	padding: 1rem;
+	padding: 12px;
 	width: 100%;
 	height: 100%;
-	min-height: 150px;
 }
 
 .category-name {

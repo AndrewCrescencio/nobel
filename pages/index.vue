@@ -23,7 +23,10 @@
 		<div class="w-full h-auto mb-12">
 			<div class="nobel-prizes-container">
 				<template v-for="prize in filteredNobelPrizes">
-					<NobelPrize :prize="prize" />
+					<NobelPrize 
+						:prize="prize" 
+						@remove="removePrize"
+					/>
 				</template>
 			</div>
 		</div>
@@ -60,6 +63,8 @@ type NobelPrize  = {
 	categoryFullName: NobelPrizeCategoryFullName;
 	laureates?: Laureate[];
 }
+
+const { addNotification } = useNotificationsStore()
 
 const nobelPrizes = ref<NobelPrize[]>([])
 
@@ -114,14 +119,18 @@ const searchByCategoryName = useDebounceFn((event: Event) => {
     searchQuery.value = input.value
 }, 300)
 
-function removePrize(){
+function removePrize(prizeToRemove: NobelPrize) {
 	// Task 3.2: Write here the necessary code to remove a prize from the list
+	nobelPrizes.value = nobelPrizes.value.filter(prize => 
+		prize.dateAwarded !== prizeToRemove.dateAwarded
+	);
 }
 
 function refreshData() {
 	getData()
 	// Task 3.3: Use the notifications store to add a notification that the data has been refreshed
 	// The store already exists and does not need any change, use its methods to trigger a notification with any message you like
+	addNotification("Data refreshed", "The data has been refreshed", 5000)
 }
 
 onMounted(() => {
